@@ -9,6 +9,16 @@ const cors = require("cors")
 const port = process.env.PORT || 5500
 
 // database connection
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrLParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => {
+        console.log("database connected")
+    })
+    .catch((err) => {
+        console.log("database connection failed", err)
+    })
 
 // express app setup
 const app = express()
@@ -26,6 +36,10 @@ app.get('/', (req,res) => {
 //users
 const userRouter = require("./routes/user")
 app.use('/user', userRouter)
+
+//auth
+const authRouter = require("./routes/auth")
+app.use('/auth', authRouter)
 
 // run app
 app.listen(port, () => {
