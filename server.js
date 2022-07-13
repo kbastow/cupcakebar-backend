@@ -30,11 +30,10 @@ app.use(fileUpload({
 
 // routes ---------------------------------------------
 
-
 // homepage
 app.get('/', (req,res) => {
     res.send("Cupcake Bar")
-})
+  })
 
 //auth ---------------------------------------------
 const authRouter = require("./routes/auth")
