@@ -25,16 +25,20 @@ const productSchema = new mongoose.Schema({
     required: true
     },
     glutenFree: {
-    type: Boolean
+    type: Boolean,
+    required: true
     },
     nutFree: {
-    type: Boolean
+    type: Boolean,
+    required: true
     },
     dairyFree: {
-    type: Boolean
+    type: Boolean,
+    required: true
     },
     vegan: {
-    type: Boolean
+    type: Boolean,
+    required: true
     },
 }, { timestamps: true })
 
