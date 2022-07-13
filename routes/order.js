@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Utils = require('./../Utils')
+const Utils = require('./../utils')
 const Order = require('./../models/Order')
 
 // GET- get orders ---------------------------
