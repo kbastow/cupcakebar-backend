@@ -2,23 +2,23 @@ require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const User = require('./../models/User')
-const Utils = require('./../utils')
+const Utils = require('./../Utils')
 const jwt = require('jsonwebtoken')
 
-// GET /signIn ---------------------------------------
+// POST /signIn ---------------------------------------
 router.post('/signin', (req, res) => {
-  // 1. check if email and passwore are empty
+  // Check if email and password are empty
   if( !req.body.email || !req.body.password ){     
     return res.status(400).json({message: "Please provide email and password"})
   }
-  // 2. continue to check credentials
+  // Continue to check credentials
   // find the user in the database
   User.findOne({email: req.body.email})
   .then(async user => {
      // account doesn't exist
      if(user == null) return res.status(400).json({message: 'No account found'})     
      // user exists, now check password
-     if( Utils.verifyHash(req.body.password, user.password) ){
+     if(Utils.verifyHash(req.body.password, user.password) ){
         // credentials match - create JWT token
         let payload = {
           _id: user._id          
@@ -49,9 +49,10 @@ router.post('/signin', (req, res) => {
 
 
 // GET /validate --------------------------------------
+
 router.get('/validate', (req, res) => {   
   // get token
-  let token = req.headers['authorization'].split(' ')[1];
+  let token = req.headers['authorization'].split(' ')[1]
   // validate token using jwt
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, authData) => {
     if(err){

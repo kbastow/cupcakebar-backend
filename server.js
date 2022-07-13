@@ -4,6 +4,7 @@ const bodyParser = require("body-parser")
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
+const fileUpload = require ("express-fileupload")
 const port = process.env.PORT || 5500
 
 // database connection ---------------------------------------------

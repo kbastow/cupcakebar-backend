@@ -2,11 +2,12 @@
 const express = require("express")
 const router = express.Router()
 const User = require("./../models/User")
-const Utils = require('./../utils')
+const Utils = require('./../Utils')
 const path = require('path')
 
 
 // PUT - add to savedProducts --------------------------------------
+
 router.put('/addSavedProducts/', Utils.authenticateToken, (req, res) => {  
     // validate check
     if(!req.body.productId){
@@ -59,6 +60,7 @@ router.get('/:id', Utils.authenticateToken, (req, res) => {
 
 
 // PUT - update user ---------------------------------------------
+
 router.put('/:id', Utils.authenticateToken, (req, res) => {
     // validate request
     if(!req.body) return res.status(400).send("Task content can't be empty")
@@ -78,6 +80,7 @@ router.put('/:id', Utils.authenticateToken, (req, res) => {
 
 
 // POST - create new user --------------------------------------
+
 router.post('/', (req, res) => {
     // validate request
     if(Object.keys(req.body).length === 0){   
@@ -89,11 +92,13 @@ router.post('/', (req, res) => {
     .then(user => {
       if( user != null ){
         return res.status(400).json({
-          message: "email already in use, use different email address"
+          message: "an account with this email address already exists"
         })
       }
     // create new user       
     let newUser = new User(req.body)
+    
+    // save to database
     newUser.save()
       .then(user => {        
         // success!  
