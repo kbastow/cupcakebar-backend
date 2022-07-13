@@ -1,6 +1,4 @@
-// Server
-
-// dependencies
+// dependencies ---------------------------------------------
 require("dotenv").config()
 const bodyParser = require("body-parser")
 const express = require("express")
@@ -8,7 +6,7 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 const port = process.env.PORT || 5500
 
-// database connection
+// database connection ---------------------------------------------
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrLParser: true,
     useUnifiedTopology: true
@@ -20,28 +18,31 @@ mongoose.connect(process.env.MONGO_URI, {
         console.log("database connection failed", err)
     })
 
-// express app setup
+// express app ---------------------------------------------
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use('*', cors())
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }
+  }))
 
+// routes ---------------------------------------------
 
-// routes
-// homepage
+// homepage ---------------------------------------------
 app.get('/', (req,res) => {
     res.send("Cupcake Bar - Coming Soon")
 })
 
-//users
+//users ---------------------------------------------
 const userRouter = require("./routes/user")
 app.use('/user', userRouter)
 
-//auth
+//auth ---------------------------------------------
 const authRouter = require("./routes/auth")
 app.use('/auth', authRouter)
 
-// run app
+// run app ---------------------------------------------
 app.listen(port, () => {
     console.log("App is running on port ", port)
 })

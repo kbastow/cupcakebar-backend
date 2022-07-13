@@ -48,9 +48,8 @@ class Utils {
         const fileExt = file.name.split('.').pop()
         // create unique file name  
         const uniqueFilename = uuidv4() + '.' + fileExt
-        // set upload path (where to store image on server)
+        // set upload path
         const uploadPathFull = path.join(uploadPath, uniqueFilename)
-        // console.log(uploadPathFull)
         // move image to uploadPath
         file.mv(uploadPathFull, function(err) {
             if(err){
