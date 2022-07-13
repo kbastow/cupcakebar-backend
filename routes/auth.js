@@ -34,14 +34,14 @@ router.post('/signin', (req, res) => {
      }else{
         // Password didn't match!
         return res.status(400).json({
-           message: "Password / Email incorrect"
+           message: "Email and password don't match an account"
         })        
      }
   })
   .catch(err => {
     console.log(err)
     res.status(500).json({
-      message: "account doesn't exist",
+      message: "Account doesn't exist",
       error: err
     })
   })

@@ -30,18 +30,23 @@ app.use(fileUpload({
 
 // routes ---------------------------------------------
 
-// homepage ---------------------------------------------
-app.get('/', (req,res) => {
-    res.send("Cupcake Bar - Coming Soon")
-})
+//auth ---------------------------------------------
+const authRouter = require("./routes/auth")
+app.use('/auth', authRouter)
 
 //users ---------------------------------------------
 const userRouter = require("./routes/user")
 app.use('/user', userRouter)
 
-//auth ---------------------------------------------
-const authRouter = require("./routes/auth")
-app.use('/auth', authRouter)
+//products ---------------------------------------------
+const productRouter = require("./routes/product")
+app.use('/product', productRouter)
+
+//orders ---------------------------------------------
+const orderRouter = require("./routes/order")
+app.use('/order', orderRouter)
+
+
 
 // run app ---------------------------------------------
 app.listen(port, () => {

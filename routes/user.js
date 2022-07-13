@@ -25,13 +25,13 @@ router.put('/addSavedProducts/', Utils.authenticateToken, (req, res) => {
     })
       .then((user) => {            
         res.json({
-          message: "Product saved to favourites list"
+          message: "Product saved to favourites"
         })
       })
       .catch(err => {
         console.log(err)
         res.status(500).json({
-          message: "Problem saving to list"
+          message: "Problem saving to favourites"
         })
       })
 })
@@ -66,8 +66,9 @@ router.put('/:id', Utils.authenticateToken, (req, res) => {
     if(!req.body) return res.status(400).send("Task content can't be empty")
     
     // update User
+    updateUser(req.body)
     function updateUser(update){    
-      User.findByIdAndUpdate(req.params.id, update, {new: true})
+      User.findByIdAndUpdate(req.params.id, update)
       .then(user => res.json(user))
       .catch(err => {
         res.status(500).json({

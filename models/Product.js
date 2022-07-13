@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
     required: true
     },
     price: {
-    type: Double,
+    type: Number,
     required: true
     },
     glutenFree: {

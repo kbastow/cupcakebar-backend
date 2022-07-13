@@ -4,9 +4,12 @@ const Utils = require('./../Utils')
 const Product = require('./../models/Product')
 const path = require('path')
 
+
+
 // GET - get all products ---------------------------
+
 router.get('/', Utils.authenticateToken, (req, res) => {
-  Product.find().populate('user', '_id firstName')
+  Product.find()
     .then(products => {
       if(products == null){
         return res.status(404).json({
@@ -23,7 +26,10 @@ router.get('/', Utils.authenticateToken, (req, res) => {
     })  
 })
 
+
+
 // POST - create new product --------------------------------------
+
 router.post('/', (req, res) => {
   // validate 
   if(Object.keys(req.body).length === 0){   
@@ -46,6 +52,10 @@ router.post('/', (req, res) => {
       description: req.body.description,
       ingredients: req.body.ingredients,
       price: req.body.price,
+      glutenFree: req.body.glutenFree,
+      nutFree: req.body.nutFree,
+      dairyFree: req.body.dairyFree,
+      vegan: req.body.vegan,
     })
   
     newProduct.save()
@@ -60,6 +70,52 @@ router.post('/', (req, res) => {
         message: "Problem creating product listing",
         error: err
       })
+    })
+  })
+})
+
+
+// PUT - update product ---------------------------------------------
+
+router.put('/', (req, res) => {
+  // validate request
+  if(!req.body) return res.status(400).send("Product content can't be empty")
+  
+  // update Product
+  updateProduct(req.body)
+  function updateProduct(update){    
+    Product.findByIdAndUpdate(req.params.id, update)
+    .then(product => res.json(product))
+    .catch(err => {
+      res.status(500).json({
+        message: 'Problem updating product',
+        error: err
+      })
+    }) 
+  }
+})
+
+// DELETE - Delete product ---------------------------------------------
+
+router.delete("/:id", (req, res) => {
+  // validate the request
+  if(!req.params.id){
+    return res.status(400).json({
+      message: "product id is missing"
+    })
+  }
+  // delete the product using to Product model
+  Product.findOneAndDelete({_id: req.params.id})
+  .then(() => {
+    res.json({
+      message: "Product deleted"
+    })
+  })
+  .catch((err) => {
+    console.log("error deleting product", err)
+    res.status(500).json({
+      message: "error deleting product",
+      error: err
     })
   })
 })
