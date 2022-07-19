@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         require: true
     },
+    avatar: {
+        type: String,
+    },
     savedProducts: [
       {type: Schema.ObjectId, ref: 'Product'}
     ]
