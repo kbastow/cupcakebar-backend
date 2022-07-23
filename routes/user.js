@@ -90,7 +90,6 @@ router.put('/:id', Utils.authenticateToken, (req, res) => {
 
 
     // update User
-    updateUser(req.body)
     function updateUser(update){    
       User.findByIdAndUpdate(req.params.id, update)
       .then(user => res.json(user))
