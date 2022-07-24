@@ -28,16 +28,18 @@ router.get('/', Utils.authenticateToken, (req, res) => {
 
 
 // GET - get single product by id -------------------------------------------------------
-router.get('/:id', Utils.authenticateToken, (req, res) => {
+
+router.get('/:id', (req, res) => {
   if(req.product._id != req.params.id){
     return res.status(401).json({
-      message: "Not authorised"
+      message: "No product found"
     })
   }
 
   Product.findById(req.params.id)
     .then(product => {
       res.json(product)
+      console.log(res.json)
     })
     .catch(err => {
       console.log(err)
