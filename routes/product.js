@@ -27,6 +27,23 @@ router.get('/', Utils.authenticateToken, (req, res) => {
 })
 
 
+// GET - get single product -------------------------------------------------------
+
+router.get('/:id', Utils.authenticateToken, (req, res) => {
+
+  Product.findById(req.params.id)
+    .then(product => {
+      res.json(product)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        message: "Couldn't get product",
+        error: err
+      })
+    })
+})
+
 
 // POST - create new product --------------------------------------
 
