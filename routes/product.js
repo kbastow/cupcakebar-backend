@@ -27,9 +27,13 @@ router.get('/', Utils.authenticateToken, (req, res) => {
 })
 
 
-// GET - get single product -------------------------------------------------------
-
+// GET - get single product by id -------------------------------------------------------
 router.get('/:id', Utils.authenticateToken, (req, res) => {
+  if(req.product._id != req.params.id){
+    return res.status(401).json({
+      message: "Not authorised"
+    })
+  }
 
   Product.findById(req.params.id)
     .then(product => {
