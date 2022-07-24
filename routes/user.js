@@ -66,6 +66,7 @@ router.put('/:id', Utils.authenticateToken, (req, res) => {
     if(!req.body) return res.status(400).send("Task content can't be empty")
 
     // Update password
+    // 
 
     let avatarFilename = null
       // if avatar image exists, upload!
@@ -80,7 +81,6 @@ router.put('/:id', Utils.authenticateToken, (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             avatar: avatarFilename,
-            password: req.body.password,
             accessLevel: req.body.accessLevel                  
         })
       })
