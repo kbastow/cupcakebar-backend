@@ -64,25 +64,26 @@ router.get('/:id', Utils.authenticateToken, (req, res) => {
 router.put('/:id', Utils.authenticateToken, (req, res) => {
     // validate request
     if(!req.body) return res.status(400).send("Task content can't be empty")
-    
+
+    // Update password
 
     let avatarFilename = null
-
-  // if avatar image exists, upload!
-  if(req.files && req.files.avatar){
-    // upload avater image then update user
-    let uploadPath = path.join(__dirname, '..', 'public', 'images')
-    Utils.uploadFile(req.files.avatar, uploadPath, (uniqueFilename) => {
-      avatarFilename = uniqueFilename
-      // update user with all fields including avatar
-      updateUser({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        avatar: avatarFilename,
-        accessLevel: req.body.accessLevel                  
+      // if avatar image exists, upload!
+      if(req.files && req.files.avatar){
+        // upload avater image then update user
+        let uploadPath = path.join(__dirname, '..', 'public', 'images')
+        Utils.uploadFile(req.files.avatar, uploadPath, (uniqueFilename) => {
+          avatarFilename = uniqueFilename
+          // update user with all fields including avatar
+          updateUser({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            avatar: avatarFilename,
+            password: req.body.password,
+            accessLevel: req.body.accessLevel                  
+        })
       })
-    })
   }else{
     // update user without avatar
     updateUser(req.body)
