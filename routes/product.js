@@ -29,7 +29,7 @@ router.get('/', Utils.authenticateToken, (req, res) => {
 
 // GET - get single product by id -------------------------------------------------------
 
-router.get('/:id', (req, res) => {
+router.get('/:id', Utils.authenticateToken, (req, res) => {
   if(req.product._id != req.params.id){
     return res.status(401).json({
       message: "No product found"
